@@ -1,0 +1,165 @@
+﻿<Window x:Class="FloatingStatusWindowLibrary.AppearanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{x:Static properties:Resources.ChangeAppearanceWindow}" Height="290" Width="450" Binding.SourceUpdated="HandleWindowSourceUpdated"
+        xmlns:properties="clr-namespace:FloatingStatusWindowLibrary.Properties"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" MinWidth="450" MinHeight="290"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:FloatingStatusWindowLibrary"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:WindowSettings}"
+        WindowStyle="ToolWindow" Closing="HandleWindowClosing" x:ClassModifier="internal">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label
+                Content="{x:Static properties:Resources.FontName}"
+                Name="FontNameLabel"
+                Target="{Binding ElementName=FontNameCombo}"
+                Margin="6" />
+        <ComboBox x:Name="FontNameCombo" Grid.Row="0" Grid.Column="1"
+                SelectedValuePath="Source"
+                SelectedValue="{Binding Path=FontName,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                Margin="6">
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="{x:Null}"
+                            MinHeight="20">
+                        <TextBlock Text="{Binding}"
+                                FontFamily="{Binding}"
+                                FontSize="14" Height="Auto"
+                                VerticalAlignment="Center" />
+                    </Border>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label
+                Content="{x:Static properties:Resources.FontSize}"
+                Name="FontSizeLabel" Grid.Row="1" Grid.Column="0"
+                Target="{Binding ElementName=FontSizeCombo}"
+                Margin="6" />
+        <ComboBox Grid.Column="1" Grid.Row="1"
+                Name="FontSizeCombo"
+                Text="{Binding Path=FontSize,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                IsEditable="True" Margin="6">
+            <ComboBoxItem Content="8" />
+            <ComboBoxItem Content="9" />
+            <ComboBoxItem Content="10" />
+            <ComboBoxItem Content="11" />
+            <ComboBoxItem Content="12" />
+            <ComboBoxItem Content="14" />
+            <ComboBoxItem Content="16" />
+            <ComboBoxItem Content="18" />
+            <ComboBoxItem Content="20" />
+            <ComboBoxItem Content="22" />
+            <ComboBoxItem Content="24" />
+            <ComboBoxItem Content="26" />
+            <ComboBoxItem Content="28" />
+            <ComboBoxItem Content="36" />
+            <ComboBoxItem Content="48" />
+            <ComboBoxItem Content="72" />
+        </ComboBox>
+        <Label
+                Content="{x:Static properties:Resources.ForegroundColor}"
+                Grid.Row="2" Grid.Column="0" Name="ForegroundColorLabel"
+                Target="{Binding ElementName=ForegroundColorPicker}"
+                Margin="6" />
+        <xctk:ColorPicker Grid.Column="1" Grid.Row="2"
+                Name="ForegroundColorPicker"
+                DisplayColorAndName="True"
+                SelectedColor="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                ShowAdvancedButton="False" Margin="6" />
+        <Label
+                Content="{x:Static properties:Resources.Padding}"
+                Grid.Row="3" Grid.Column="0" Name="PaddingLabel" Target="{Binding ElementName=PaddingUpDown}" Margin="6" />
+        <xctk:IntegerUpDown Grid.Column="1"
+                Grid.Row="3" Name="PaddingUpDown"
+                Minimum="0" Maximum="20"
+                Value="{Binding Path=Padding,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                TextAlignment="Left" Margin="6" />
+        <Label
+                Content="{x:Static properties:Resources.HorizontalAlignment}"
+                Grid.Row="4" Grid.Column="0" Name="HorizontalAlignmentLabel"
+                Target="{Binding ElementName=HorizontalAlignmentCombo}"
+                Margin="6" />
+        <ComboBox Grid.Column="1" Grid.Row="4"
+                Name="HorizontalAlignmentCombo"
+                SelectedValuePath="Tag"
+                SelectedValue="{Binding Path=HorizontalAlignment,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                Margin="6">
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Left}"
+                    Tag="{x:Static HorizontalAlignment.Left}" />
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Right}"
+                    Tag="{x:Static HorizontalAlignment.Right}" />
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Center}"
+                    Tag="{x:Static HorizontalAlignment.Center}" />
+        </ComboBox>
+        <Label
+                Content="{x:Static properties:Resources.VerticalAlignment}"
+                Grid.Row="5" Grid.Column="0" Name="VerticalAlignmentLabel"
+                Target="{Binding ElementName=VerticalAlignmentCombo}"
+                Margin="6" />
+        <ComboBox Grid.Column="1" Grid.Row="5"
+                Name="VerticalAlignmentCombo"
+                SelectedValuePath="Tag"
+                SelectedValue="{Binding Path=VerticalAlignment,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                Margin="6">
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Top}"
+                    Tag="{x:Static VerticalAlignment.Top}" />
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Bottom}"
+                    Tag="{x:Static VerticalAlignment.Bottom}" />
+            <ComboBoxItem
+                    Content="{x:Static properties:Resources.Center}"
+                    Tag="{x:Static VerticalAlignment.Center}" />
+        </ComboBox>
+        <Grid Grid.Column="1" Grid.Row="6"
+                HorizontalAlignment="Right" Name="GridButtons" Width="Auto" Grid.IsSharedSizeScope="True"
+                Height="38" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"
+                        SharedSizeGroup="buttons" />
+                <ColumnDefinition Width="Auto"
+                        SharedSizeGroup="buttons" />
+            </Grid.ColumnDefinitions>
+            <Button
+                    Content="{x:Static properties:Resources.OK}"
+                    Height="23"
+                    HorizontalAlignment="Stretch" Margin="6"
+                    Name="OkayButton"
+                    VerticalAlignment="Stretch" Width="75"
+                    Padding="7,3" IsDefault="True"
+                    Click="HandleOkayButtonClick" />
+            <Button
+                    Content="{x:Static properties:Resources.Cancel}"
+                    Grid.Column="1" Height="23"
+                    HorizontalAlignment="Stretch" Margin="6"
+                    Name="CancelButton"
+                    VerticalAlignment="Stretch" Width="75"
+                    Padding="7,3" IsCancel="True" />
+        </Grid>
+    </Grid>
+</Window>
