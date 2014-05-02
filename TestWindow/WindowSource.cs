@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using FloatingStatusWindowLibrary;
+﻿using FloatingStatusWindowLibrary;
 using System;
 using System.Globalization;
 using System.Timers;

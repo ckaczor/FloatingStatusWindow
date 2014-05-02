@@ -15,13 +15,6 @@
                     <Label HorizontalAlignment="Stretch" Name="HeaderLabel" Margin="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0">
                         Testing
                     </Label>
-                    <Button Name="SettingsButton" Height="18" Width="18" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 5, 0" WindowChrome.IsHitTestVisibleInChrome="True" Click="HandleSettingsButtonClick">
-                        <Button.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Name="MenuChangeAppearance" Header="{x:Static p:Resources.ChangeAppearance}" Click="HandleChangeAppearanceMenuClick" />
-                            </ContextMenu>
-                        </Button.ContextMenu>
-                    </Button>
                 </Grid>
             </Border>
             <htmlLabelControl:HtmlLabel Name="HtmlLabel" Foreground="White" Margin="0,20,0,0" />

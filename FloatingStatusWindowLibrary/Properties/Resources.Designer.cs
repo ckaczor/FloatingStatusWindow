@@ -88,20 +88,20 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Appearance....
+        ///   Looks up a localized string similar to Change Appearance.
         /// </summary>
-        public static string ChangeAppearance {
+        public static string ChangeAppearanceWindow {
             get {
-                return ResourceManager.GetString("ChangeAppearance", resourceCulture);
+                return ResourceManager.GetString("ChangeAppearanceWindow", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Change Appearance.
         /// </summary>
-        public static string ChangeAppearanceWindow {
+        public static string ContextMenuChangeAppearance {
             get {
-                return ResourceManager.GetString("ChangeAppearanceWindow", resourceCulture);
+                return ResourceManager.GetString("ContextMenuChangeAppearance", resourceCulture);
             }
         }
         

@@ -126,10 +126,10 @@
   <data name="Center" xml:space="preserve">
     <value>Center</value>
   </data>
-  <data name="ChangeAppearance" xml:space="preserve">
-    <value>Change Appearance...</value>
-  </data>
   <data name="ChangeAppearanceWindow" xml:space="preserve">
+    <value>Change Appearance</value>
+  </data>
+  <data name="ContextMenuChangeAppearance" xml:space="preserve">
     <value>Change Appearance</value>
   </data>
   <data name="ContextMenuExit" xml:space="preserve">

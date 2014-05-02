@@ -73,17 +73,6 @@ namespace FloatingStatusWindowLibrary
             HtmlLabel.Text = "Testing";
         }
 
-        private void HandleChangeAppearanceMenuClick(object sender, RoutedEventArgs e)
-        {
-            var appearanceWindow = new AppearanceWindow(_windowSettings);
-            appearanceWindow.ShowDialog();
-        }
-
-        private void HandleSettingsButtonClick(object sender, RoutedEventArgs e)
-        {
-            SettingsButton.ContextMenu.IsOpen = true;
-        }
-
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);

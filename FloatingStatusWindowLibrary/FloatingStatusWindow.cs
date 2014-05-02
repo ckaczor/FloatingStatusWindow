@@ -20,6 +20,16 @@ namespace FloatingStatusWindowLibrary
             var contextMenu = new ContextMenu();
             contextMenu.Opened += HandleContextMenuOpened;
 
+            var menuItem = new MenuItem
+            {
+                Name = "contextMenuChangeAppearance",
+                Header = Properties.Resources.ContextMenuChangeAppearance
+            };
+            menuItem.Click += HandleChangeAppearancemMenuItemClick;
+            contextMenu.Items.Add(menuItem);
+
+            contextMenu.Items.Add(new Separator());
+
             _lockMenuItem = new MenuItem
             {
                 Name = "contextMenuItemLocked",
@@ -31,7 +41,7 @@ namespace FloatingStatusWindowLibrary
 
             contextMenu.Items.Add(new Separator());
 
-            var menuItem = new MenuItem
+            menuItem = new MenuItem
             {
                 Name = "contextMenuItemExit",
                 Header = Properties.Resources.ContextMenuExit
@@ -50,6 +60,12 @@ namespace FloatingStatusWindowLibrary
             _mainWindow.Closed += HandleMainWindowClosed;
 
             _mainWindow.Show();
+        }
+
+        void HandleChangeAppearancemMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            var appearanceWindow = new AppearanceWindow(_mainWindow.WindowSettings);
+            appearanceWindow.ShowDialog();
         }
 
         private void HandleMainWindowClosed(object sender, EventArgs e)
