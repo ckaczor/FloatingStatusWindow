@@ -1,6 +1,5 @@
 ﻿using Common.Wpf.HtmlLabelControl;
 using System;
-using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows;

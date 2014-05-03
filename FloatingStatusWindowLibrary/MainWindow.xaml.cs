@@ -69,8 +69,6 @@ namespace FloatingStatusWindowLibrary
 
             // Apply the stored settings
             _windowSettings.Apply();
-
-            HtmlLabel.Text = "Testing";
         }
 
         protected override void OnLocationChanged(EventArgs e)

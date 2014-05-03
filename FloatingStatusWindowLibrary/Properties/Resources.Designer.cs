@@ -97,6 +97,15 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start with Windows.
+        /// </summary>
+        public static string ContextMenuAutoStart {
+            get {
+                return ResourceManager.GetString("ContextMenuAutoStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Appearance.
         /// </summary>
         public static string ContextMenuChangeAppearance {

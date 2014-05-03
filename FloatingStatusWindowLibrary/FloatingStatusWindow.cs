@@ -9,7 +9,9 @@ namespace FloatingStatusWindowLibrary
     {
         private readonly MainWindow _mainWindow;
         private readonly TaskbarIcon _taskbarIcon;
+
         private readonly MenuItem _lockMenuItem;
+        private readonly MenuItem _autoStartMenuItem;
 
         private readonly IWindowSource _windowSource;
 
@@ -19,6 +21,21 @@ namespace FloatingStatusWindowLibrary
 
             var contextMenu = new ContextMenu();
             contextMenu.Opened += HandleContextMenuOpened;
+
+            if (StartManager.ManageAutoStart)
+            {
+                _autoStartMenuItem = new MenuItem
+                {
+                    Name = "contextMenuItemAutoStart",
+                    IsChecked = StartManager.AutoStartEnabled,
+                    Header = Properties.Resources.ContextMenuAutoStart
+
+                };
+                _autoStartMenuItem.Click += (sender, args) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
+                contextMenu.Items.Add(_autoStartMenuItem);
+
+                contextMenu.Items.Add(new Separator());
+            }
 
             var menuItem = new MenuItem
             {
@@ -81,6 +98,9 @@ namespace FloatingStatusWindowLibrary
         private void HandleContextMenuOpened(object sender, RoutedEventArgs e)
         {
             _lockMenuItem.IsChecked = _mainWindow.WindowSettings.Locked;
+
+            if (_autoStartMenuItem != null)
+                _autoStartMenuItem.IsChecked = StartManager.AutoStartEnabled;
         }
 
         public void SetText(string text)

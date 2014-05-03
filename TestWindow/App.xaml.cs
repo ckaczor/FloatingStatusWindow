@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using FloatingStatusWindowLibrary;
+using System.Collections.Generic;
 using System.Windows;
+using Settings = TestWindow.Properties.Settings;
 
 namespace TestWindow
 {
@@ -11,7 +13,20 @@ namespace TestWindow
         {
             base.OnStartup(e);
 
-            _windowSourceList = new List<WindowSource> { new WindowSource(), new WindowSource(), new WindowSource() };
+            StartManager.ManageAutoStart = true;
+            StartManager.AutoStartEnabled = Settings.Default.AutoStart;
+            StartManager.AutoStartChanged += (value =>
+            {
+                Settings.Default.AutoStart = value;
+                Settings.Default.Save();
+            });
+
+            _windowSourceList = new List<WindowSource>
+            {
+                //new WindowSource(), 
+                //new WindowSource(), 
+                new WindowSource()
+            };
         }
 
         protected override void OnExit(ExitEventArgs e)
