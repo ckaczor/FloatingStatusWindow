@@ -9,7 +9,8 @@ namespace FloatingStatusWindowLibrary
 {
     public class FloatingStatusWindow : IDisposable
     {
-        public event EventHandler WindowResized = delegate { }; 
+        public event EventHandler WindowResized = delegate { };
+        public event EventHandler WindowClosed = delegate { };
 
         private readonly MainWindow _mainWindow;
         private readonly TaskbarIcon _taskbarIcon;
@@ -26,30 +27,8 @@ namespace FloatingStatusWindowLibrary
             var contextMenu = new ContextMenu();
             contextMenu.Opened += HandleContextMenuOpened;
 
-            if (StartManager.ManageAutoStart)
-            {
-                _autoStartMenuItem = new MenuItem
-                {
-                    Name = "contextMenuItemAutoStart",
-                    IsChecked = StartManager.AutoStartEnabled,
-                    Header = Properties.Resources.ContextMenuAutoStart
-
-                };
-                _autoStartMenuItem.Click += (sender, args) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
-                contextMenu.Items.Add(_autoStartMenuItem);
-
-                contextMenu.Items.Add(new Separator());
-            }
-
-            var menuItem = new MenuItem
-            {
-                Name = "contextMenuChangeAppearance",
-                Header = Properties.Resources.ContextMenuChangeAppearance
-            };
-            menuItem.Click += HandleChangeAppearancemMenuItemClick;
-            contextMenu.Items.Add(menuItem);
-
-            contextMenu.Items.Add(new Separator());
+            var optionsMenu = new MenuItem { Name = "contextMenuItemOptions", Header = "Window" };
+            contextMenu.Items.Add(optionsMenu);
 
             _lockMenuItem = new MenuItem
             {
@@ -58,7 +37,32 @@ namespace FloatingStatusWindowLibrary
                 Header = Properties.Resources.ContextMenuLocked
             };
             _lockMenuItem.Click += HandleLockedMenuItemClicked;
-            contextMenu.Items.Add(_lockMenuItem);
+            optionsMenu.Items.Add(_lockMenuItem);
+
+            if (StartManager.ManageAutoStart)
+            {
+                optionsMenu.Items.Add(new Separator());
+
+                _autoStartMenuItem = new MenuItem
+                {
+                    Name = "contextMenuItemAutoStart",
+                    IsChecked = StartManager.AutoStartEnabled,
+                    Header = Properties.Resources.ContextMenuAutoStart
+
+                };
+                _autoStartMenuItem.Click += (sender, args) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
+                optionsMenu.Items.Add(_autoStartMenuItem);
+            }
+
+            optionsMenu.Items.Add(new Separator());
+
+            var menuItem = new MenuItem
+            {
+                Name = "contextMenuChangeAppearance",
+                Header = Properties.Resources.ContextMenuChangeAppearance
+            };
+            menuItem.Click += HandleChangeAppearancemMenuItemClick;
+            optionsMenu.Items.Add(menuItem);
 
             contextMenu.Items.Add(new Separator());
 
@@ -97,6 +101,8 @@ namespace FloatingStatusWindowLibrary
 
         private void HandleMainWindowClosed(object sender, EventArgs e)
         {
+            WindowClosed(null, new EventArgs());
+
             _taskbarIcon.Dispose();
         }
 

@@ -133,7 +133,7 @@
     <value>Start with Windows</value>
   </data>
   <data name="ContextMenuChangeAppearance" xml:space="preserve">
-    <value>Change Appearance</value>
+    <value>Change Appearance...</value>
   </data>
   <data name="ContextMenuExit" xml:space="preserve">
     <value>Exit</value>

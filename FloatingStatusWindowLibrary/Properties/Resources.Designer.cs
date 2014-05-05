@@ -106,7 +106,7 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Appearance.
+        ///   Looks up a localized string similar to Change Appearance....
         /// </summary>
         public static string ContextMenuChangeAppearance {
             get {
