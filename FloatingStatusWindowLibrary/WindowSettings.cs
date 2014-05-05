@@ -1,15 +1,26 @@
-﻿using Common.Wpf.HtmlLabelControl;
+﻿using System.Drawing;
+using System.Drawing.Text;
+using System.Linq;
+using Common.Wpf.HtmlLabelControl;
 using System;
 using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using Color = System.Windows.Media.Color;
+using FontFamily = System.Windows.Media.FontFamily;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
+using SystemFonts = System.Windows.SystemFonts;
 
 namespace FloatingStatusWindowLibrary
 {
     public class WindowSettings : ICloneable
     {
+        private const string DefaultFontName = "Consolas";
+        private const int DefaultFontSize = 14;
+
         public string Name { get; set; }
         public bool Visible { get; set; }
         public Point Location { get; set; }
@@ -28,6 +39,12 @@ namespace FloatingStatusWindowLibrary
         [XmlIgnore]
         private HtmlLabel HtmlLabel { get; set; }
 
+        [XmlIgnore]
+        public Font Font
+        {
+            get { return new Font(FontName, (float) FontSize); }
+        }
+
         internal void SetWindow(MainWindow floatingWindow)
         {
             Window = floatingWindow;
@@ -36,12 +53,15 @@ namespace FloatingStatusWindowLibrary
 
         private WindowSettings()
         {
-            FontName = SystemFonts.MessageFontFamily.Source;
-            FontColor = (System.Drawing.SystemColors.Desktop.GetBrightness() < 0.5 ? Colors.White : Colors.Black);
-            FontSize = SystemFonts.MessageFontSize;
-            Padding = 10;
+            var allFonts = new InstalledFontCollection();
+            var fontExists = allFonts.Families.Any(f => f.Name == DefaultFontName);
+
+            FontName = fontExists ? DefaultFontName : SystemFonts.MessageFontFamily.Source;
+            FontColor = (System.Drawing.SystemColors.Desktop.GetBrightness() < 0.5 ? Colors.Silver : Colors.Black);
+            FontSize = fontExists ? DefaultFontSize : SystemFonts.MessageFontSize;
+            Padding = 5;
             HorizontalAlignment = HorizontalAlignment.Left;
-            VerticalAlignment = VerticalAlignment.Top;
+            VerticalAlignment = VerticalAlignment.Bottom;
             Locked = false;
         }
 

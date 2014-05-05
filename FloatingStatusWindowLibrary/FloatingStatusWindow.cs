@@ -2,11 +2,15 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace FloatingStatusWindowLibrary
 {
     public class FloatingStatusWindow : IDisposable
     {
+        public event EventHandler WindowResized = delegate { }; 
+
         private readonly MainWindow _mainWindow;
         private readonly TaskbarIcon _taskbarIcon;
 
@@ -75,8 +79,14 @@ namespace FloatingStatusWindowLibrary
 
             _mainWindow = new MainWindow(windowSource);
             _mainWindow.Closed += HandleMainWindowClosed;
+            _mainWindow.SizeChanged += HandleWindowSizeChanged;
 
             _mainWindow.Show();
+        }
+
+        void HandleWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            WindowResized(this, new EventArgs());
         }
 
         void HandleChangeAppearancemMenuItemClick(object sender, RoutedEventArgs e)
@@ -129,6 +139,26 @@ namespace FloatingStatusWindowLibrary
             _taskbarIcon.Dispose();
 
             _mainWindow.Close();
+        }
+
+        public Point Location
+        {
+            get { return new Point(_mainWindow.Left, _mainWindow.Top); }
+        }
+
+        public Size Size
+        {
+            get { return new Size(_mainWindow.Width, _mainWindow.Height); }
+        }
+
+        public Size ContentSize
+        {
+            get { return new Size(_mainWindow.HtmlLabel.ActualWidth, _mainWindow.HtmlLabel.ActualHeight); }
+        }
+
+        public WindowSettings Settings
+        {
+            get { return _mainWindow.WindowSettings; }
         }
     }
 }
