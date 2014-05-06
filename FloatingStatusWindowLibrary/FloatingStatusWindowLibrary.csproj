@@ -73,6 +73,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StartManager.cs" />
+    <Compile Include="WindowManager.cs" />
     <Compile Include="WindowSettings.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

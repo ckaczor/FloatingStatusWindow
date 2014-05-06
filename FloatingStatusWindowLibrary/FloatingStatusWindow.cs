@@ -1,4 +1,6 @@
-﻿using Hardcodet.Wpf.TaskbarNotification;
+﻿using Common.Native;
+using FloatingStatusWindowLibrary.Properties;
+using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +17,9 @@ namespace FloatingStatusWindowLibrary
         private readonly MainWindow _mainWindow;
         private readonly TaskbarIcon _taskbarIcon;
 
+        private readonly MenuItem _allWindowsMenuItem;
+        private readonly Separator _allWindowsSeparator;
+
         private readonly MenuItem _lockMenuItem;
         private readonly MenuItem _autoStartMenuItem;
 
@@ -27,14 +32,34 @@ namespace FloatingStatusWindowLibrary
             var contextMenu = new ContextMenu();
             contextMenu.Opened += HandleContextMenuOpened;
 
-            var optionsMenu = new MenuItem { Name = "contextMenuItemOptions", Header = "Window" };
+            _allWindowsMenuItem = new MenuItem { Header = Resources.AllWindowsMenu };
+            contextMenu.Items.Add(_allWindowsMenuItem);
+
+            var menuItem = new MenuItem { Header = Resources.ContextMenuLock };
+            menuItem.Click += (sender, args) => WindowManager.SetLockOnAll(true);
+            _allWindowsMenuItem.Items.Add(menuItem);
+
+            menuItem = new MenuItem { Header = Resources.ContextMenuUnlock };
+            menuItem.Click += (sender, args) => WindowManager.SetLockOnAll(false);
+            _allWindowsMenuItem.Items.Add(menuItem);
+
+            _allWindowsMenuItem.Items.Add(new Separator());
+
+            menuItem = new MenuItem { Header = Resources.ContextMenuClose };
+            menuItem.Click += (sender, args) => WindowManager.CloseAll();
+            _allWindowsMenuItem.Items.Add(menuItem);
+
+            _allWindowsSeparator = new Separator();
+            contextMenu.Items.Add(_allWindowsSeparator);
+
+            var optionsMenu = new MenuItem { Name = "contextMenuItemOptions", Header = Resources.WindowMenu };
             contextMenu.Items.Add(optionsMenu);
 
             _lockMenuItem = new MenuItem
             {
                 Name = "contextMenuItemLocked",
                 IsChecked = false,
-                Header = Properties.Resources.ContextMenuLocked
+                Header = Resources.ContextMenuLocked
             };
             _lockMenuItem.Click += HandleLockedMenuItemClicked;
             optionsMenu.Items.Add(_lockMenuItem);
@@ -47,7 +72,7 @@ namespace FloatingStatusWindowLibrary
                 {
                     Name = "contextMenuItemAutoStart",
                     IsChecked = StartManager.AutoStartEnabled,
-                    Header = Properties.Resources.ContextMenuAutoStart
+                    Header = Resources.ContextMenuAutoStart
 
                 };
                 _autoStartMenuItem.Click += (sender, args) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
@@ -56,10 +81,10 @@ namespace FloatingStatusWindowLibrary
 
             optionsMenu.Items.Add(new Separator());
 
-            var menuItem = new MenuItem
+            menuItem = new MenuItem
             {
                 Name = "contextMenuChangeAppearance",
-                Header = Properties.Resources.ContextMenuChangeAppearance
+                Header = Resources.ContextMenuChangeAppearance
             };
             menuItem.Click += HandleChangeAppearancemMenuItemClick;
             optionsMenu.Items.Add(menuItem);
@@ -69,7 +94,7 @@ namespace FloatingStatusWindowLibrary
             menuItem = new MenuItem
             {
                 Name = "contextMenuItemExit",
-                Header = Properties.Resources.ContextMenuExit
+                Header = Resources.ContextMenuExit
             };
             menuItem.Click += HandleExitMenuItemClick;
             contextMenu.Items.Add(menuItem);
@@ -117,6 +142,9 @@ namespace FloatingStatusWindowLibrary
 
             if (_autoStartMenuItem != null)
                 _autoStartMenuItem.IsChecked = StartManager.AutoStartEnabled;
+
+            _allWindowsMenuItem.Visibility = WindowManager.GetWindowList().Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+            _allWindowsSeparator.Visibility = _allWindowsMenuItem.Visibility;
         }
 
         public void SetText(string text)

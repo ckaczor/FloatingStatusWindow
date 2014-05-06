@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllWindowsMenu" xml:space="preserve">
+    <value>All Windows</value>
+  </data>
   <data name="Bottom" xml:space="preserve">
     <value>Bottom</value>
   </data>
@@ -135,11 +138,20 @@
   <data name="ContextMenuChangeAppearance" xml:space="preserve">
     <value>Change Appearance...</value>
   </data>
+  <data name="ContextMenuClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="ContextMenuExit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="ContextMenuLock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
   <data name="ContextMenuLocked" xml:space="preserve">
     <value>Locked</value>
+  </data>
+  <data name="ContextMenuUnlock" xml:space="preserve">
+    <value>Unlock</value>
   </data>
   <data name="FontName" xml:space="preserve">
     <value>Font _name:</value>
@@ -170,5 +182,8 @@
   </data>
   <data name="VerticalAlignment" xml:space="preserve">
     <value>_Vertical alignment:</value>
+  </data>
+  <data name="WindowMenu" xml:space="preserve">
+    <value>Window</value>
   </data>
 </root>

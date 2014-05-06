@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Common.Wpf.Windows;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
-using Common.Native;
+using System.Windows.Threading;
 
 namespace FloatingStatusWindowLibrary
 {
@@ -13,6 +14,7 @@ namespace FloatingStatusWindowLibrary
         private const int WindowCaptionHeight = 24;
 
         private readonly WindowChrome _windowChrome;
+        private readonly Dispatcher _dispatcher;
 
         private WindowSettings _windowSettings;
         public WindowSettings WindowSettings
@@ -44,6 +46,8 @@ namespace FloatingStatusWindowLibrary
         {
             InitializeComponent();
 
+            _dispatcher = Dispatcher.CurrentDispatcher;
+
             // Create and set the window chrome 
             _windowChrome = new WindowChrome { CaptionHeight = WindowCaptionHeight };
             WindowChrome.SetWindowChrome(this, _windowChrome);
@@ -71,6 +75,30 @@ namespace FloatingStatusWindowLibrary
             _windowSettings.Apply();
         }
 
+        protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WindowManager.SetLockMessage)
+            {
+                var lockState = (wParam == (IntPtr) 1);
+
+                _dispatcher.InvokeAsync(() =>
+                {
+                    WindowSettings.Locked = lockState;
+                    Locked = lockState;
+                });
+
+                return IntPtr.Zero;
+            }
+
+            if (msg == WindowManager.CloseMessage)
+            {
+                _dispatcher.InvokeAsync(Close);
+                return IntPtr.Zero;
+            }
+
+            return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+        }
+
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);
@@ -85,36 +113,14 @@ namespace FloatingStatusWindowLibrary
             _windowSettings.Size = new Size(Width, Height);
         }
 
-        private List<Rect> _windowList;
-        private IntPtr _windowHandle;
-        protected override List<Rect> OtherWindows
+        protected override List<WindowInformation> OtherWindows
         {
             get
             {
-                _windowList = new List<Rect>();
-                _windowHandle = new WindowInteropHelper(this).Handle;
+                var windowHandle = new WindowInteropHelper(this).Handle;
 
-                Functions.User32.EnumWindows(EnumWindowProc, IntPtr.Zero);
-
-                return _windowList;
+                return WindowManager.GetWindowList(windowHandle);
             }
-        }
-
-        private bool EnumWindowProc(IntPtr hWnd, IntPtr lParam)
-        {
-            var windowText = Functions.Window.GetText(hWnd);
-
-            if (windowText == "FloatingStatusWindow" && hWnd != _windowHandle)
-            {
-                var windowPlacement = new Structures.WindowPlacement();
-                Functions.User32.GetWindowPlacement(hWnd, ref windowPlacement);
-
-                var p = windowPlacement.NormalPosition;
-
-                _windowList.Add(new Rect(p.X, p.Y, p.Width, p.Height));
-            }
-
-            return true;
         }
     }
 }

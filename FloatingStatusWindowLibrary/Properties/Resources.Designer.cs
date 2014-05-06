@@ -61,6 +61,15 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Windows.
+        /// </summary>
+        public static string AllWindowsMenu {
+            get {
+                return ResourceManager.GetString("AllWindowsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bottom.
         /// </summary>
         public static string Bottom {
@@ -115,6 +124,15 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string ContextMenuClose {
+            get {
+                return ResourceManager.GetString("ContextMenuClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string ContextMenuExit {
@@ -124,11 +142,29 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock.
+        /// </summary>
+        public static string ContextMenuLock {
+            get {
+                return ResourceManager.GetString("ContextMenuLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Locked.
         /// </summary>
         public static string ContextMenuLocked {
             get {
                 return ResourceManager.GetString("ContextMenuLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock.
+        /// </summary>
+        public static string ContextMenuUnlock {
+            get {
+                return ResourceManager.GetString("ContextMenuUnlock", resourceCulture);
             }
         }
         
@@ -219,6 +255,15 @@ namespace FloatingStatusWindowLibrary.Properties {
         public static string VerticalAlignment {
             get {
                 return ResourceManager.GetString("VerticalAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window.
+        /// </summary>
+        public static string WindowMenu {
+            get {
+                return ResourceManager.GetString("WindowMenu", resourceCulture);
             }
         }
     }
