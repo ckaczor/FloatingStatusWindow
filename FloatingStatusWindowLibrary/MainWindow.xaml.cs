@@ -122,5 +122,11 @@ namespace FloatingStatusWindowLibrary
                 return WindowManager.GetWindowList(windowHandle);
             }
         }
+
+        private void HandleChangeAppearanceClick(object sender, RoutedEventArgs e)
+        {
+            var appearanceWindow = new AppearanceWindow(WindowSettings);
+            appearanceWindow.ShowDialog();
+        }
     }
 }

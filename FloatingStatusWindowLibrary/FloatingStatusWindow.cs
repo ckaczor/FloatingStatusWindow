@@ -1,5 +1,4 @@
-﻿using Common.Native;
-using FloatingStatusWindowLibrary.Properties;
+﻿using FloatingStatusWindowLibrary.Properties;
 using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Windows;
