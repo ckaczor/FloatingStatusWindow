@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitStatusWindow", "..\MonitStatusWindow\MonitStatusWindow.csproj", "{3DAB06DD-C4E9-4AC6-88CF-E4923DE357AD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,11 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitStatusWindow", "..\Mon
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessCpuUsageStatusWindow", "..\ProcessCpuUsageStatusWindow\ProcessCpuUsageStatusWindow.csproj", "{C3C29363-2E3C-4478-B2A6-125DEA683E0D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F023A16C-2F13-4A87-A8B7-22C43C4A58A4} = {F023A16C-2F13-4A87-A8B7-22C43C4A58A4}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTemperatureStatusWindow", "..\SystemTemperatureStatusWindow\SystemTemperatureStatusWindow.csproj", "{E45425FD-4302-4555-8F24-18F2373DE1CE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F023A16C-2F13-4A87-A8B7-22C43C4A58A4} = {F023A16C-2F13-4A87-A8B7-22C43C4A58A4}
 	EndProjectSection
@@ -53,6 +48,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThermostatStatusWindow", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{17864D82-457D-4A0A-BC10-1D07F2B3A5D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTemperatureStatusWindow", "..\SystemTemperatureStatusWindow\Window\SystemTemperatureStatusWindow.csproj", "{E45425FD-4302-4555-8F24-18F2373DE1CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F023A16C-2F13-4A87-A8B7-22C43C4A58A4} = {F023A16C-2F13-4A87-A8B7-22C43C4A58A4}
+		{17864D82-457D-4A0A-BC10-1D07F2B3A5D6} = {17864D82-457D-4A0A-BC10-1D07F2B3A5D6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,14 +80,6 @@ Global
 		{C3C29363-2E3C-4478-B2A6-125DEA683E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3C29363-2E3C-4478-B2A6-125DEA683E0D}.Release|x64.ActiveCfg = Release|Any CPU
 		{C3C29363-2E3C-4478-B2A6-125DEA683E0D}.Release|x86.ActiveCfg = Release|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|x64.ActiveCfg = Release|Any CPU
-		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|x86.ActiveCfg = Release|Any CPU
 		{659DB919-854A-43BD-AE59-CF36E9CB610E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{659DB919-854A-43BD-AE59-CF36E9CB610E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659DB919-854A-43BD-AE59-CF36E9CB610E}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -179,6 +172,14 @@ Global
 		{17864D82-457D-4A0A-BC10-1D07F2B3A5D6}.Release|x64.Build.0 = Release|x64
 		{17864D82-457D-4A0A-BC10-1D07F2B3A5D6}.Release|x86.ActiveCfg = Release|x86
 		{17864D82-457D-4A0A-BC10-1D07F2B3A5D6}.Release|x86.Build.0 = Release|x86
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{E45425FD-4302-4555-8F24-18F2373DE1CE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
