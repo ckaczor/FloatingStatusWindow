@@ -59,7 +59,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="WindowSource.cs" />
+    <Compile Include="WindowSource2.cs" />
+    <Compile Include="WindowSource4.cs" />
+    <Compile Include="WindowSource3.cs" />
+    <Compile Include="WindowSource1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

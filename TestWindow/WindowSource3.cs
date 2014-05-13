@@ -6,13 +6,13 @@ using System.Windows.Threading;
 
 namespace TestWindow
 {
-    internal class WindowSource : IWindowSource, IDisposable
+    internal class WindowSource3 : IWindowSource, IDisposable
     {
         private readonly FloatingStatusWindow _floatingStatusWindow;
         private readonly Timer _timer;
         private readonly Dispatcher _dispatcher;
 
-        internal WindowSource()
+        internal WindowSource3()
         {
             _floatingStatusWindow = new FloatingStatusWindow(this);
             _floatingStatusWindow.SetText("Loading...");
@@ -40,7 +40,7 @@ namespace TestWindow
 
         public string Name
         {
-            get { return "Test Window"; }
+            get { return "Test Window 3"; }
         }
 
         public System.Drawing.Icon Icon
@@ -52,11 +52,11 @@ namespace TestWindow
         {
             get
             {
-                return Properties.Settings.Default.WindowSettings;
+                return Properties.Settings.Default.WindowSettings3;
             }
             set
             {
-                Properties.Settings.Default.WindowSettings = value;
+                Properties.Settings.Default.WindowSettings3 = value;
                 Properties.Settings.Default.Save();
             }
         }

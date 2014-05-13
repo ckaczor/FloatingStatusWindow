@@ -1,4 +1,5 @@
-﻿using FloatingStatusWindowLibrary;
+﻿using System;
+using FloatingStatusWindowLibrary;
 using System.Collections.Generic;
 using System.Windows;
 using Settings = TestWindow.Properties.Settings;
@@ -7,7 +8,7 @@ namespace TestWindow
 {
     public partial class App
     {
-        private List<WindowSource> _windowSourceList;
+        private List<IDisposable> _windowSourceList;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -21,11 +22,12 @@ namespace TestWindow
                 Settings.Default.Save();
             });
 
-            _windowSourceList = new List<WindowSource>
+            _windowSourceList = new List<IDisposable>
             {
-                //new WindowSource(), 
-                //new WindowSource(), 
-                new WindowSource()
+                new WindowSource1(), 
+                new WindowSource2(), 
+                new WindowSource3(),
+                new WindowSource4()
             };
         }
 
