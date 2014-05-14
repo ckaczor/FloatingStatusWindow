@@ -108,23 +108,41 @@ namespace FloatingStatusWindowLibrary
             _mainWindow = new MainWindow(windowSource);
             _mainWindow.Closed += HandleMainWindowClosed;
             _mainWindow.SizeChanged += HandleWindowSizeChanged;
+            _mainWindow.LocationChanged += HandleWindowLocationChanged;
+            _mainWindow.LockStateChanged += HandleWindowLockStateChanged;
 
             _mainWindow.Show();
         }
 
-        void HandleWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        private void HandleWindowLockStateChanged(object sender, EventArgs e)
         {
-            WindowResized(this, new EventArgs());
+            Save();
         }
 
-        void HandleChangeAppearancemMenuItemClick(object sender, RoutedEventArgs e)
+        private void HandleWindowLocationChanged(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void HandleWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            WindowResized(this, new EventArgs());
+
+            Save();
+        }
+
+        private void HandleChangeAppearancemMenuItemClick(object sender, RoutedEventArgs e)
         {
             var appearanceWindow = new AppearanceWindow(_mainWindow.WindowSettings);
             appearanceWindow.ShowDialog();
+
+            Save();
         }
 
         private void HandleMainWindowClosed(object sender, EventArgs e)
         {
+            Save();
+
             WindowClosed(null, new EventArgs());
 
             _taskbarIcon.Dispose();
@@ -159,6 +177,8 @@ namespace FloatingStatusWindowLibrary
 
         private void HandleExitMenuItemClick(object sender, RoutedEventArgs e)
         {
+            Save();
+
             _mainWindow.Close();
         }
 

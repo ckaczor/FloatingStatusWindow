@@ -11,6 +11,8 @@ namespace FloatingStatusWindowLibrary
 {
     internal partial class MainWindow
     {
+        public event EventHandler LockStateChanged = delegate { };
+
         private const int WindowCaptionHeight = 24;
 
         private readonly WindowChrome _windowChrome;
@@ -39,6 +41,8 @@ namespace FloatingStatusWindowLibrary
                 // Show and enable the window border if the window is unlocked
                 BorderFull.BorderBrush = (_locked ? Brushes.Transparent : SystemColors.ActiveCaptionBrush);
                 BorderFull.IsEnabled = !_locked;
+
+                LockStateChanged(null, new EventArgs());
             }
         }
 
