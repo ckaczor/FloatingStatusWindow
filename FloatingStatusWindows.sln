@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitStatusWindow", "..\MonitStatusWindow\MonitStatusWindow.csproj", "{3DAB06DD-C4E9-4AC6-88CF-E4923DE357AD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Native", "..\Common.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenHardwareMonitorLib", "..\..\Public\OpenHardwareMonitor\OpenHardwareMonitorLib.csproj", "{B0397530-545A-471D-BB74-027AE456DF1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftStatusWindow", "..\MinecraftStatusWindow\MinecraftStatusWindow.csproj", "{D3ADE27E-4645-4C31-B4B2-8A64EF6984B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftStatusWindow", "..\MinecraftStatusWindow\MinecraftStatusWindow\MinecraftStatusWindow.csproj", "{D3ADE27E-4645-4C31-B4B2-8A64EF6984B0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F023A16C-2F13-4A87-A8B7-22C43C4A58A4} = {F023A16C-2F13-4A87-A8B7-22C43C4A58A4}
 	EndProjectSection
