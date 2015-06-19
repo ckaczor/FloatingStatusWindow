@@ -213,5 +213,11 @@ namespace FloatingStatusWindowLibrary
         {
             get { return _mainWindow.WindowSettings; }
         }
+
+        public string IconToolTipText
+        {
+            get { return _taskbarIcon.ToolTipText; }
+            set { _taskbarIcon.ToolTipText = value; }
+        }
     }
 }
