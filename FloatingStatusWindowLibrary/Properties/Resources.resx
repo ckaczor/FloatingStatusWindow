@@ -150,6 +150,12 @@
   <data name="ContextMenuLocked" xml:space="preserve">
     <value>Locked</value>
   </data>
+  <data name="ContextMenuRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ContextMenuSettings" xml:space="preserve">
+    <value>Settings...</value>
+  </data>
   <data name="ContextMenuUnlock" xml:space="preserve">
     <value>Unlock</value>
   </data>

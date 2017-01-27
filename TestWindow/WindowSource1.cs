@@ -48,6 +48,26 @@ namespace TestWindow
             get { return Properties.Resources.ApplicationIcon; }
         }
 
+        public bool HasSettingsMenu
+        {
+            get { return true; }
+        }
+
+        public void ShowSettings()
+        {
+
+        }
+
+        public bool HasRefreshMenu
+        {
+            get { return true; }
+        }
+
+        public void Refresh()
+        {
+
+        }
+
         public string WindowSettings
         {
             get

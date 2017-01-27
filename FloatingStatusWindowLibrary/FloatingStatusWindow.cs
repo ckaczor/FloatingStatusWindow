@@ -31,10 +31,30 @@ namespace FloatingStatusWindowLibrary
             var contextMenu = new ContextMenu();
             contextMenu.Opened += HandleContextMenuOpened;
 
+            MenuItem menuItem;
+
+            if (_windowSource.HasSettingsMenu)
+            {
+                menuItem = new MenuItem { Header = Resources.ContextMenuSettings };
+                menuItem.Click += (sender, args) => _windowSource.ShowSettings();
+                contextMenu.Items.Add(menuItem);
+
+                contextMenu.Items.Add(new Separator());
+            }
+
+            if (_windowSource.HasRefreshMenu)
+            {
+                menuItem = new MenuItem { Header = Resources.ContextMenuRefresh };
+                menuItem.Click += (sender, args) => _windowSource.Refresh();
+                contextMenu.Items.Add(menuItem);
+
+                contextMenu.Items.Add(new Separator());
+            }
+
             _allWindowsMenuItem = new MenuItem { Header = Resources.AllWindowsMenu };
             contextMenu.Items.Add(_allWindowsMenuItem);
 
-            var menuItem = new MenuItem { Header = Resources.ContextMenuLock };
+            menuItem = new MenuItem { Header = Resources.ContextMenuLock };
             menuItem.Click += (sender, args) => WindowManager.SetLockOnAll(true);
             _allWindowsMenuItem.Items.Add(menuItem);
 
