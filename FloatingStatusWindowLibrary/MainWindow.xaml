@@ -46,7 +46,7 @@
             </Border>
             <htmlLabelControl:HtmlLabel Name="HtmlLabel"
                                         Foreground="White"
-                                        Margin="0,20,0,0" />
+                                        Margin="0,24,0,0" />
         </Grid>
     </Border>
 </windows:SnappingWindow>

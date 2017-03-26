@@ -35,8 +35,10 @@ namespace FloatingStatusWindowLibrary
 
                 _windowChrome.CaptionHeight = (_locked ? 0 : WindowCaptionHeight);
 
+                HtmlLabel.Margin = new Thickness(0, (_locked ? 0 : WindowCaptionHeight), 0, 0);
+
                 // Show the header border if the window is unlocked
-                HeaderBorder.Visibility = (_locked ? Visibility.Hidden : Visibility.Visible);
+                HeaderBorder.Visibility = (_locked ? Visibility.Collapsed : Visibility.Visible);
 
                 // Show and enable the window border if the window is unlocked
                 BorderFull.BorderBrush = (_locked ? Brushes.Transparent : SystemColors.ActiveCaptionBrush);
