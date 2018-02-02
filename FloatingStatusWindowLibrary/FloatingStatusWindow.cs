@@ -180,7 +180,9 @@ namespace FloatingStatusWindowLibrary
             if (_autoStartMenuItem != null)
                 _autoStartMenuItem.IsChecked = StartManager.AutoStartEnabled;
 
-            _allWindowsMenuItem.Visibility = WindowManager.GetWindowList().Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+            var windowCount = WindowManager.GetWindowList().Count;
+
+            _allWindowsMenuItem.Visibility = windowCount <= 1 ? Visibility.Collapsed : Visibility.Visible;
             _allWindowsSeparator.Visibility = _allWindowsMenuItem.Visibility;
         }
 
