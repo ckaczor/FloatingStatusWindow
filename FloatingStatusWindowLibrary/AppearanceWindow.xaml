@@ -4,14 +4,14 @@
         Title="{x:Static properties:Resources.ChangeAppearanceWindow}" Height="290" Width="450" Binding.SourceUpdated="HandleWindowSourceUpdated"
         xmlns:properties="clr-namespace:FloatingStatusWindowLibrary.Properties"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" MinWidth="450" MinHeight="290"
+        ResizeMode="NoResize" SizeToContent="Height"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:FloatingStatusWindowLibrary"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:WindowSettings}"
-        WindowStyle="ToolWindow" Closing="HandleWindowClosing" x:ClassModifier="internal">
+        Closing="HandleWindowClosing" x:ClassModifier="internal" Icon="pack://siteoforigin:,,,/Resources/gear.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
