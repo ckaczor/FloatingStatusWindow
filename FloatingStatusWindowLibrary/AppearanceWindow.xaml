@@ -87,7 +87,7 @@
                 Name="ForegroundColorPicker"
                 DisplayColorAndName="True"
                 SelectedColor="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
-                ShowAdvancedButton="False" Margin="6" />
+                Margin="6" />
         <Label
                 Content="{x:Static properties:Resources.Padding}"
                 Grid.Row="3" Grid.Column="0" Name="PaddingLabel" Target="{Binding ElementName=PaddingUpDown}" Margin="6" />

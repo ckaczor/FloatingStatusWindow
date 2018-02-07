@@ -1,6 +1,7 @@
-﻿using System;
-using FloatingStatusWindowLibrary;
+﻿using FloatingStatusWindowLibrary;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using Settings = TestWindow.Properties.Settings;
 
@@ -15,7 +16,7 @@ namespace TestWindow
             base.OnStartup(e);
 
             StartManager.ManageAutoStart = true;
-            StartManager.AutoStartEnabled = Settings.Default.AutoStart;
+            StartManager.AutoStartEnabled = !Debugger.IsAttached && Settings.Default.AutoStart;
             StartManager.AutoStartChanged += (value =>
             {
                 Settings.Default.AutoStart = value;

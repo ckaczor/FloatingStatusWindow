@@ -7,14 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatingStatusWindowLibrary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWindow", "TestWindow\TestWindow.csproj", "{0C541788-8FFD-47B6-8E6B-653A884CFA55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Wpf", "..\Common.Wpf\Common.Wpf.csproj", "{0074C983-550E-4094-9E8C-F566FB669297}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Native", "..\Common.Native\Common.Native.csproj", "{ED1C07A1-54F5-4796-8B06-2A0BB1960D84}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C4E7C6BF-86B2-433B-B842-31B82811FAC9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Wpf", "FloatingStatusWindowLibrary\Common.Wpf\Common.Wpf.csproj", "{0074C983-550E-4094-9E8C-F566FB669297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Native", "FloatingStatusWindowLibrary\Common.Wpf\Common.Native\Common.Native.csproj", "{ED1C07A1-54F5-4796-8B06-2A0BB1960D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

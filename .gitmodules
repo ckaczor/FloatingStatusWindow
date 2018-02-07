@@ -1,0 +1,3 @@
+[submodule "FloatingStatusWindowLibrary/Common.Wpf"]
+	path = FloatingStatusWindowLibrary/Common.Wpf
+	url = https://github.com/ckaczor/Common.Wpf.git
