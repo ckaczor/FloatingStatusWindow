@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C4E7C6BF-86B2-433B-B842-31B82811FAC9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		LICENSE.md = LICENSE.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Wpf", "FloatingStatusWindowLibrary\Common.Wpf\Common.Wpf.csproj", "{0074C983-550E-4094-9E8C-F566FB669297}"
