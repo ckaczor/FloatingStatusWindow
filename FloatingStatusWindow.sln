@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatingStatusWindowLibrary", "FloatingStatusWindowLibrary\FloatingStatusWindowLibrary.csproj", "{F023A16C-2F13-4A87-A8B7-22C43C4A58A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatingStatusWindow", "Library\FloatingStatusWindow.csproj", "{F023A16C-2F13-4A87-A8B7-22C43C4A58A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWindow", "TestWindow\TestWindow.csproj", "{0C541788-8FFD-47B6-8E6B-653A884CFA55}"
 EndProject
@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C4
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Wpf", "FloatingStatusWindowLibrary\Common.Wpf\Common.Wpf.csproj", "{0074C983-550E-4094-9E8C-F566FB669297}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Wpf", "Library\Common.Wpf\Common.Wpf.csproj", "{0074C983-550E-4094-9E8C-F566FB669297}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Native", "FloatingStatusWindowLibrary\Common.Wpf\Common.Native\Common.Native.csproj", "{ED1C07A1-54F5-4796-8B06-2A0BB1960D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Native", "Library\Common.Wpf\Common.Native\Common.Native.csproj", "{ED1C07A1-54F5-4796-8B06-2A0BB1960D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
