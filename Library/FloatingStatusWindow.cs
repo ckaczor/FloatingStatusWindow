@@ -102,10 +102,18 @@ namespace FloatingStatusWindowLibrary
 
             menuItem = new MenuItem
             {
+                Name = "contextMenuResetPosition",
+                Header = Resources.ContextMenuResetPosition
+            };
+            menuItem.Click += HandleResetPositionMenuItemClick;
+            optionsMenu.Items.Add(menuItem);
+
+            menuItem = new MenuItem
+            {
                 Name = "contextMenuChangeAppearance",
                 Header = Resources.ContextMenuChangeAppearance
             };
-            menuItem.Click += HandleChangeAppearancemMenuItemClick;
+            menuItem.Click += HandleChangeAppearanceMenuItemClick;
             optionsMenu.Items.Add(menuItem);
 
             contextMenu.Items.Add(new Separator());
@@ -134,6 +142,14 @@ namespace FloatingStatusWindowLibrary
             _mainWindow.Show();
         }
 
+        private void HandleResetPositionMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.Left = 0;
+            _mainWindow.Top = 0;
+            _mainWindow.Width = 300;
+            _mainWindow.Height = 300;
+        }
+
         private void HandleWindowLockStateChanged(object sender, EventArgs e)
         {
             Save();
@@ -151,7 +167,7 @@ namespace FloatingStatusWindowLibrary
             Save();
         }
 
-        private void HandleChangeAppearancemMenuItemClick(object sender, RoutedEventArgs e)
+        private void HandleChangeAppearanceMenuItemClick(object sender, RoutedEventArgs e)
         {
             var appearanceWindow = new AppearanceWindow(_mainWindow.WindowSettings);
             appearanceWindow.ShowDialog();

@@ -169,6 +169,15 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Position.
+        /// </summary>
+        public static string ContextMenuResetPosition {
+            get {
+                return ResourceManager.GetString("ContextMenuResetPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings....
         /// </summary>
         public static string ContextMenuSettings {
