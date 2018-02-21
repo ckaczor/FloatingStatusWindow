@@ -10,6 +10,6 @@
     <tags>wpf</tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\**\*" target="lib/net45" />
+    <file src="bin\$configuration$\**\*" target="lib\net45" />
   </files>
 </package>
