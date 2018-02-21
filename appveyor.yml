@@ -13,7 +13,7 @@ build:
   project: FloatingStatusWindow.sln
   verbosity: minimal
 after_build:
-- cmd: nuget pack FloatingStatusWindow.nuspec -Version %appveyor_build_version% -Properties Configuration=Release -OutputDirectory bin\Release\
+- cmd: nuget pack Library\FloatingStatusWindow.nuspec -Version %appveyor_build_version% -Properties Configuration=Release -OutputDirectory Library\bin\Release\
 artifacts:
 - path: Library\bin\$(configuration)\FloatingStatusWindow.*.nupkg
   name: NuGet
