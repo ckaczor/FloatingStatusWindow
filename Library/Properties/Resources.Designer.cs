@@ -223,16 +223,6 @@ namespace FloatingStatusWindowLibrary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        public static System.Drawing.Icon gear {
-            get {
-                object obj = ResourceManager.GetObject("gear", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to _Horizontal alignment:.
         /// </summary>
         public static string HorizontalAlignment {
