@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>FloatingStatusWindow</id>
+    <version>$version$</version>
+    <authors>Chris Kaczor</authors>
+    <description>Library to create a "floating" window that blends in with the Windows desktop and allows displaying status text.</description>
+    <projectUrl>https://github.com/ckaczor/FloatingStatusWindow</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/ckaczor/FloatingStatusWindow/master/LICENSE.md</licenseUrl>
+    <tags>wpf</tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\**\*" target="lib/net45" />
+  </files>
+</package>

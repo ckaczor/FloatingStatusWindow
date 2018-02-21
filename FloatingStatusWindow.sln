@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatingStatusWindow", "Library\FloatingStatusWindow.csproj", "{F023A16C-2F13-4A87-A8B7-22C43C4A58A4}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C4E7C6BF-86B2-433B-B842-31B82811FAC9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		Library\FloatingStatusWindow.nuspec = Library\FloatingStatusWindow.nuspec
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
