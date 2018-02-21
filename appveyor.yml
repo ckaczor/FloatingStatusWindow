@@ -24,3 +24,5 @@ deploy:
   name: NuGet
 install:
 - cmd: git submodule update --init --recursive
+before_build:
+- cmd: msbuild /t:restore
