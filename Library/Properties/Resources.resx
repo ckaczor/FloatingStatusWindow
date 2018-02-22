@@ -132,6 +132,9 @@
   <data name="ChangeAppearanceWindow" xml:space="preserve">
     <value>Change Appearance</value>
   </data>
+  <data name="ContextMenuAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="ContextMenuAutoStart" xml:space="preserve">
     <value>Start with Windows</value>
   </data>

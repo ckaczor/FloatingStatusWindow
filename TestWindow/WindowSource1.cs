@@ -1,6 +1,7 @@
 ﻿using FloatingStatusWindowLibrary;
 using System;
 using System.Globalization;
+using System.Reflection;
 using System.Timers;
 using System.Windows.Threading;
 
@@ -51,6 +52,13 @@ namespace TestWindow
         public bool HasSettingsMenu
         {
             get { return true; }
+        }
+
+        public bool HasAboutMenu => true;
+
+        public void ShowAbout()
+        {
+            _floatingStatusWindow.SetText(Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
         public void ShowSettings()

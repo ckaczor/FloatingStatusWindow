@@ -10,8 +10,10 @@ namespace FloatingStatusWindowLibrary
 
         bool HasSettingsMenu { get; }
         bool HasRefreshMenu { get; }
+        bool HasAboutMenu { get; }
 
         void ShowSettings();
         void Refresh();
+        void ShowAbout();
     }
 }

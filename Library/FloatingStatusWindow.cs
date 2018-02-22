@@ -118,6 +118,15 @@ namespace FloatingStatusWindowLibrary
 
             contextMenu.Items.Add(new Separator());
 
+            if (_windowSource.HasAboutMenu)
+            {
+                menuItem = new MenuItem { Header = Resources.ContextMenuAbout };
+                menuItem.Click += (sender, args) => _windowSource.ShowAbout();
+                contextMenu.Items.Add(menuItem);
+
+                contextMenu.Items.Add(new Separator());
+            }
+
             menuItem = new MenuItem
             {
                 Name = "contextMenuItemExit",
