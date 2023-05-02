@@ -1,34 +1,31 @@
-﻿using Common.Wpf.Extensions;
+﻿using ChrisKaczor.Wpf.Application;
 using System;
 using System.Windows;
 
-namespace FloatingStatusWindowLibrary
+namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+
+public static class StartManager
 {
-    public static class StartManager
+    public delegate void AutoStartChangedEventHandler(bool autoStart);
+
+    public static event AutoStartChangedEventHandler AutoStartChanged = delegate { };
+
+    public static bool ManageAutoStart { get; set; }
+
+    private static bool _autoStartEnabled;
+
+    public static bool AutoStartEnabled
     {
-        public delegate void AutoStartChangedEventHandler(bool autoStart);
-
-        public static event AutoStartChangedEventHandler AutoStartChanged = delegate { };
-
-        public static bool ManageAutoStart { get; set; }
-
-        private static bool _autoStartEnabled;
-        public static bool AutoStartEnabled
+        get => ManageAutoStart && _autoStartEnabled;
+        set
         {
-            get
-            {
-                return ManageAutoStart && _autoStartEnabled;
-            }
-            set
-            {
-                if (!ManageAutoStart)
-                    throw new InvalidOperationException("Cannot set AutoStartEnabled when ManageAutoStart is False");
+            if (!ManageAutoStart)
+                throw new InvalidOperationException("Cannot set AutoStartEnabled when ManageAutoStart is False");
 
-                _autoStartEnabled = value;
+            _autoStartEnabled = value;
 
-                Application.Current.SetStartWithWindows(_autoStartEnabled);
-                AutoStartChanged(_autoStartEnabled);
-            }
+            System.Windows.Application.Current.SetStartWithWindows(_autoStartEnabled);
+            AutoStartChanged(_autoStartEnabled);
         }
     }
 }

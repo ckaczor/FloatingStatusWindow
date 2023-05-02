@@ -1,20 +1,21 @@
-﻿<windows:SnappingWindow x:Class="FloatingStatusWindowLibrary.MainWindow"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:htmlLabelControl="clr-namespace:Common.Wpf.HtmlLabelControl;assembly=Common.Wpf"
-                        xmlns:windows="clr-namespace:Common.Wpf.Windows;assembly=Common.Wpf"
-                        windows:ControlBox.HasMaximizeButton="False"
-                        windows:ControlBox.HasMinimizeButton="False"
-                        windows:ControlBox.HasSystemMenu="False"
-                        Title="FloatingStatusWindow"
-                        Height="250"
-                        Width="400"
-                        WindowStyle="None"
-                        AllowsTransparency="True"
-                        ResizeMode="CanResize"
-                        Background="Transparent"
-                        ShowInTaskbar="False"
-                        x:ClassModifier="internal">
+﻿<snappingWindow:SnappingWindow x:Class="ChrisKaczor.Wpf.FloatingStatusWindow.MainWindow"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:snappingWindow="clr-namespace:ChrisKaczor.Wpf.Windows;assembly=ChrisKaczor.Wpf.Windows.SnappingWindow"
+                               xmlns:controlBox="clr-namespace:ChrisKaczor.Wpf.Windows;assembly=ChrisKaczor.Wpf.Windows.ControlBox"
+                               xmlns:controls="clr-namespace:ChrisKaczor.Wpf.Controls;assembly=ChrisKaczor.Wpf.Controls.HtmlTextBlock"
+                               controlBox:ControlBox.HasMaximizeButton="False"
+                               controlBox:ControlBox.HasMinimizeButton="False"
+                               controlBox:ControlBox.HasSystemMenu="False"
+                               Title="FloatingStatusWindow"
+                               Height="250"
+                               Width="400"
+                               WindowStyle="None"
+                               AllowsTransparency="True"
+                               ResizeMode="CanResize"
+                               Background="Transparent"
+                               ShowInTaskbar="False"
+                               x:ClassModifier="internal">
 
     <Border Name="BorderFull"
             BorderThickness="4,0,4,4"
@@ -41,13 +42,17 @@
                             Content="&#xE115;"
                             FontFamily="Segoe UI Symbol"
                             FontSize="12"
-                            Padding="0"></Button>
+                            Padding="0">
+                    </Button>
                 </Grid>
             </Border>
-            <htmlLabelControl:HtmlLabel Name="HtmlLabel"
+            <Grid Name="ContentGrid">
+                <controls:HtmlTextBlock Name="HtmlLabel"
                                         Foreground="White"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
                                         Margin="0,24,0,0" />
+            </Grid>
         </Grid>
     </Border>
-</windows:SnappingWindow>
-    
+</snappingWindow:SnappingWindow>

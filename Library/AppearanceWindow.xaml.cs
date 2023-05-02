@@ -1,50 +1,46 @@
-﻿using Common.Wpf.Extensions;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Media;
 
-namespace FloatingStatusWindowLibrary
+namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+
+internal partial class AppearanceWindow
 {
-    internal partial class AppearanceWindow
+    private WindowSettings _currentSettings;
+
+    private readonly WindowSettings _originalSettings;
+
+    public AppearanceWindow(WindowSettings windowSettings)
     {
-        private WindowSettings _currentSettings;
+        InitializeComponent();
 
-        private readonly WindowSettings _originalSettings;
+        _currentSettings = windowSettings;
 
-        public AppearanceWindow(WindowSettings windowSettings)
-        {
-            InitializeComponent();
+        _originalSettings = (WindowSettings)_currentSettings.Clone();
 
-            _currentSettings = windowSettings;
+        var allFonts = Fonts.SystemFontFamilies.OrderBy(x => x.Source);
 
-            _originalSettings = (WindowSettings) _currentSettings.Clone();
+        FontNameCombo.ItemsSource = allFonts;
 
-            var allFonts = Fonts.SystemFontFamilies.OrderBy(x => x.Source);
+        DataContext = _currentSettings;
+    }
 
-            var filteredFonts = allFonts.Where(f => FontExtensions.IsComposite(f) || (!FontExtensions.IsSymbol(f) && FontExtensions.IsVisible(f)));
+    private void HandleOkayButtonClick(object sender, System.Windows.RoutedEventArgs e)
+    {
+        DialogResult = true;
+        Close();
+    }
 
-            FontNameCombo.ItemsSource = filteredFonts;
+    private void HandleWindowSourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+    {
+        _currentSettings.Apply();
+    }
 
-            DataContext = _currentSettings;
-        }
+    private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        if (DialogResult == true)
+            return;
 
-        private void HandleOkayButtonClick(object sender, System.Windows.RoutedEventArgs e)
-        {
-            DialogResult = true;
-            Close();
-        }
-
-        private void HandleWindowSourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
-        {
-            _currentSettings.Apply();
-        }
-
-        private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (DialogResult == true)
-                return;
-
-            _currentSettings = _originalSettings;
-            _currentSettings.Apply();
-        }
+        _currentSettings = _originalSettings;
+        _currentSettings.Apply();
     }
 }

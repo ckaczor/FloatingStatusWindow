@@ -1,0 +1,63 @@
+name: 2.0.0.$(Rev:r)
+
+pr: none
+
+trigger:
+  batch: 'true'
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: GetRevision@1
+  displayName: 'Get Revision'
+  inputs:
+    VariableName: Revision
+
+- task: Assembly-Info-NetCore@3
+  displayName: 'Set Assembly Info'
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: 'Library/*.csproj'
+    InsertAttributes: true
+    FileEncoding: 'utf-8'
+    WriteBOM: true
+    FailOnWarning: true
+    Authors: 'Chris Kaczor'
+    Copyright: 'Copyright $(date:YYYY) Chris Kaczor'
+    FileVersion: '2.0.0.$(Revision)'
+    PackageVersion: '2.0.0.$(Revision)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'FloatingStatusWindow.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: "dotnet pack"
+  inputs:
+    command: 'pack'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: 'FloatingStatusWindow.csproj'
+    nobuild: true
+    versioningScheme: 'byBuildNumber'
+
+- task: NuGetCommand@2
+  displayName: 'nuget push'
+  inputs:
+    command: 'push'
+    feedsToUse: 'select'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: external
+    publishFeedCredentials: 'NuGet'
+    publishVstsFeed: 'Packages'
+    versioningScheme: 'byBuildNumber'
+    allowPackageConflicts: true

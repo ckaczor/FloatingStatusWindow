@@ -1,270 +1,258 @@
-﻿using FloatingStatusWindowLibrary.Properties;
-using Hardcodet.Wpf.TaskbarNotification;
+﻿using ChrisKaczor.Wpf.FloatingStatusWindow.Properties;
+using H.NotifyIcon;
+using JetBrains.Annotations;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Point = System.Windows.Point;
-using Size = System.Windows.Size;
 
-namespace FloatingStatusWindowLibrary
+namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+
+[PublicAPI]
+public class FloatingStatusWindow : IDisposable
 {
-    public class FloatingStatusWindow : IDisposable
+    public event EventHandler WindowResized = delegate { };
+    public event EventHandler WindowClosed = delegate { };
+
+    private readonly MainWindow _mainWindow;
+    private readonly TaskbarIcon _trayIcon;
+
+    private readonly MenuItem _allWindowsMenuItem;
+    private readonly Separator _allWindowsSeparator;
+
+    private readonly MenuItem _lockMenuItem;
+    private readonly MenuItem _autoStartMenuItem;
+
+    private readonly IWindowSource _windowSource;
+
+    public FloatingStatusWindow(IWindowSource windowSource)
     {
-        public event EventHandler WindowResized = delegate { };
-        public event EventHandler WindowClosed = delegate { };
+        _windowSource = windowSource;
 
-        private readonly MainWindow _mainWindow;
-        private readonly TaskbarIcon _taskbarIcon;
+        var contextMenu = new ContextMenu();
+        contextMenu.Opened += HandleContextMenuOpened;
 
-        private readonly MenuItem _allWindowsMenuItem;
-        private readonly Separator _allWindowsSeparator;
+        MenuItem menuItem;
 
-        private readonly MenuItem _lockMenuItem;
-        private readonly MenuItem _autoStartMenuItem;
-
-        private readonly IWindowSource _windowSource;
-
-        public FloatingStatusWindow(IWindowSource windowSource)
+        if (_windowSource.HasSettingsMenu)
         {
-            _windowSource = windowSource;
-
-            var contextMenu = new ContextMenu();
-            contextMenu.Opened += HandleContextMenuOpened;
-
-            MenuItem menuItem;
-
-            if (_windowSource.HasSettingsMenu)
-            {
-                menuItem = new MenuItem { Header = Resources.ContextMenuSettings };
-                menuItem.Click += (sender, args) => _windowSource.ShowSettings();
-                contextMenu.Items.Add(menuItem);
-
-                contextMenu.Items.Add(new Separator());
-            }
-
-            if (_windowSource.HasRefreshMenu)
-            {
-                menuItem = new MenuItem { Header = Resources.ContextMenuRefresh };
-                menuItem.Click += (sender, args) => _windowSource.Refresh();
-                contextMenu.Items.Add(menuItem);
-
-                contextMenu.Items.Add(new Separator());
-            }
-
-            _allWindowsMenuItem = new MenuItem { Header = Resources.AllWindowsMenu };
-            contextMenu.Items.Add(_allWindowsMenuItem);
-
-            menuItem = new MenuItem { Header = Resources.ContextMenuLock };
-            menuItem.Click += (sender, args) => WindowManager.SetLockOnAll(true);
-            _allWindowsMenuItem.Items.Add(menuItem);
-
-            menuItem = new MenuItem { Header = Resources.ContextMenuUnlock };
-            menuItem.Click += (sender, args) => WindowManager.SetLockOnAll(false);
-            _allWindowsMenuItem.Items.Add(menuItem);
-
-            _allWindowsMenuItem.Items.Add(new Separator());
-
-            menuItem = new MenuItem { Header = Resources.ContextMenuClose };
-            menuItem.Click += (sender, args) => WindowManager.CloseAll();
-            _allWindowsMenuItem.Items.Add(menuItem);
-
-            _allWindowsSeparator = new Separator();
-            contextMenu.Items.Add(_allWindowsSeparator);
-
-            var optionsMenu = new MenuItem { Name = "contextMenuItemOptions", Header = Resources.WindowMenu };
-            contextMenu.Items.Add(optionsMenu);
-
-            _lockMenuItem = new MenuItem
-            {
-                Name = "contextMenuItemLocked",
-                IsChecked = false,
-                Header = Resources.ContextMenuLocked
-            };
-            _lockMenuItem.Click += HandleLockedMenuItemClicked;
-            optionsMenu.Items.Add(_lockMenuItem);
-
-            if (StartManager.ManageAutoStart)
-            {
-                optionsMenu.Items.Add(new Separator());
-
-                _autoStartMenuItem = new MenuItem
-                {
-                    Name = "contextMenuItemAutoStart",
-                    IsChecked = StartManager.AutoStartEnabled,
-                    Header = Resources.ContextMenuAutoStart
-
-                };
-                _autoStartMenuItem.Click += (sender, args) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
-                optionsMenu.Items.Add(_autoStartMenuItem);
-            }
-
-            optionsMenu.Items.Add(new Separator());
-
-            menuItem = new MenuItem
-            {
-                Name = "contextMenuResetPosition",
-                Header = Resources.ContextMenuResetPosition
-            };
-            menuItem.Click += HandleResetPositionMenuItemClick;
-            optionsMenu.Items.Add(menuItem);
-
-            menuItem = new MenuItem
-            {
-                Name = "contextMenuChangeAppearance",
-                Header = Resources.ContextMenuChangeAppearance
-            };
-            menuItem.Click += HandleChangeAppearanceMenuItemClick;
-            optionsMenu.Items.Add(menuItem);
-
-            contextMenu.Items.Add(new Separator());
-
-            if (_windowSource.HasAboutMenu)
-            {
-                menuItem = new MenuItem { Header = Resources.ContextMenuAbout };
-                menuItem.Click += (sender, args) => _windowSource.ShowAbout();
-                contextMenu.Items.Add(menuItem);
-
-                contextMenu.Items.Add(new Separator());
-            }
-
-            menuItem = new MenuItem
-            {
-                Name = "contextMenuItemExit",
-                Header = Resources.ContextMenuExit
-            };
-            menuItem.Click += HandleExitMenuItemClick;
+            menuItem = new MenuItem { Header = Resources.ContextMenuSettings };
+            menuItem.Click += (_, _) => _windowSource.ShowSettings();
             contextMenu.Items.Add(menuItem);
 
-            _taskbarIcon = new TaskbarIcon
+            contextMenu.Items.Add(new Separator());
+        }
+
+        if (_windowSource.HasRefreshMenu)
+        {
+            menuItem = new MenuItem { Header = Resources.ContextMenuRefresh };
+            menuItem.Click += (_, _) => _windowSource.Refresh();
+            contextMenu.Items.Add(menuItem);
+
+            contextMenu.Items.Add(new Separator());
+        }
+
+        _allWindowsMenuItem = new MenuItem { Header = Resources.AllWindowsMenu };
+        contextMenu.Items.Add(_allWindowsMenuItem);
+
+        menuItem = new MenuItem { Header = Resources.ContextMenuLock };
+        menuItem.Click += (_, _) => WindowManager.SetLockOnAll(true);
+        _allWindowsMenuItem.Items.Add(menuItem);
+
+        menuItem = new MenuItem { Header = Resources.ContextMenuUnlock };
+        menuItem.Click += (_, _) => WindowManager.SetLockOnAll(false);
+        _allWindowsMenuItem.Items.Add(menuItem);
+
+        _allWindowsMenuItem.Items.Add(new Separator());
+
+        menuItem = new MenuItem { Header = Resources.ContextMenuClose };
+        menuItem.Click += (_, _) => WindowManager.CloseAll();
+        _allWindowsMenuItem.Items.Add(menuItem);
+
+        _allWindowsSeparator = new Separator();
+        contextMenu.Items.Add(_allWindowsSeparator);
+
+        var optionsMenu = new MenuItem { Name = "contextMenuItemOptions", Header = Resources.WindowMenu };
+        contextMenu.Items.Add(optionsMenu);
+
+        _lockMenuItem = new MenuItem
+        {
+            Name = "contextMenuItemLocked",
+            IsChecked = false,
+            Header = Resources.ContextMenuLocked
+        };
+        _lockMenuItem.Click += HandleLockedMenuItemClicked;
+        optionsMenu.Items.Add(_lockMenuItem);
+
+        if (StartManager.ManageAutoStart)
+        {
+            optionsMenu.Items.Add(new Separator());
+
+            _autoStartMenuItem = new MenuItem
             {
-                ToolTipText = _windowSource.Name,
-                Icon = _windowSource.Icon,
-                ContextMenu = contextMenu
+                Name = "contextMenuItemAutoStart",
+                IsChecked = StartManager.AutoStartEnabled,
+                Header = Resources.ContextMenuAutoStart
             };
-
-            _mainWindow = new MainWindow(windowSource);
-            _mainWindow.Closed += HandleMainWindowClosed;
-            _mainWindow.SizeChanged += HandleWindowSizeChanged;
-            _mainWindow.LocationChanged += HandleWindowLocationChanged;
-            _mainWindow.LockStateChanged += HandleWindowLockStateChanged;
-
-            _mainWindow.Show();
+            _autoStartMenuItem.Click += (_, _) => StartManager.AutoStartEnabled = !StartManager.AutoStartEnabled;
+            optionsMenu.Items.Add(_autoStartMenuItem);
         }
 
-        private void HandleResetPositionMenuItemClick(object sender, RoutedEventArgs e)
+        optionsMenu.Items.Add(new Separator());
+
+        menuItem = new MenuItem
         {
-            _mainWindow.Left = 0;
-            _mainWindow.Top = 0;
-            _mainWindow.Width = 300;
-            _mainWindow.Height = 300;
-        }
+            Name = "contextMenuResetPosition",
+            Header = Resources.ContextMenuResetPosition
+        };
+        menuItem.Click += HandleResetPositionMenuItemClick;
+        optionsMenu.Items.Add(menuItem);
 
-        private void HandleWindowLockStateChanged(object sender, EventArgs e)
+        menuItem = new MenuItem
         {
-            Save();
-        }
+            Name = "contextMenuChangeAppearance",
+            Header = Resources.ContextMenuChangeAppearance
+        };
+        menuItem.Click += HandleChangeAppearanceMenuItemClick;
+        optionsMenu.Items.Add(menuItem);
 
-        private void HandleWindowLocationChanged(object sender, EventArgs e)
+        contextMenu.Items.Add(new Separator());
+
+        if (_windowSource.HasAboutMenu)
         {
-            Save();
+            menuItem = new MenuItem { Header = Resources.ContextMenuAbout };
+            menuItem.Click += (_, _) => _windowSource.ShowAbout();
+            contextMenu.Items.Add(menuItem);
+
+            contextMenu.Items.Add(new Separator());
         }
 
-        private void HandleWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        menuItem = new MenuItem
         {
-            WindowResized(this, new EventArgs());
+            Name = "contextMenuItemExit",
+            Header = Resources.ContextMenuExit
+        };
+        menuItem.Click += HandleExitMenuItemClick;
+        contextMenu.Items.Add(menuItem);
 
-            Save();
-        }
-
-        private void HandleChangeAppearanceMenuItemClick(object sender, RoutedEventArgs e)
+        _trayIcon = new TaskbarIcon
         {
-            var appearanceWindow = new AppearanceWindow(_mainWindow.WindowSettings);
-            appearanceWindow.ShowDialog();
+            ToolTipText = _windowSource.Name,
+            Icon = _windowSource.Icon,
+            ContextMenu = contextMenu,
+            Id = _windowSource.Id
+        };
 
-            Save();
-        }
+        _trayIcon.ForceCreate();
 
-        private void HandleMainWindowClosed(object sender, EventArgs e)
-        {
-            Save();
+        _mainWindow = new MainWindow(windowSource);
+        _mainWindow.Closed += HandleMainWindowClosed;
+        _mainWindow.SizeChanged += HandleWindowSizeChanged;
+        _mainWindow.LocationChanged += HandleWindowLocationChanged;
+        _mainWindow.LockStateChanged += HandleWindowLockStateChanged;
 
-            WindowClosed(null, new EventArgs());
+        _mainWindow.Show();
+    }
 
-            _taskbarIcon.Dispose();
-        }
+    private void HandleResetPositionMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        _mainWindow.Left = 0;
+        _mainWindow.Top = 0;
+        _mainWindow.Width = 300;
+        _mainWindow.Height = 300;
+    }
 
-        public ContextMenu ContextMenu
-        {
-            get { return _taskbarIcon.ContextMenu; }
-        }
+    private void HandleWindowLockStateChanged(object sender, EventArgs e)
+    {
+        Save();
+    }
 
-        private void HandleContextMenuOpened(object sender, RoutedEventArgs e)
-        {
-            _lockMenuItem.IsChecked = _mainWindow.WindowSettings.Locked;
+    private void HandleWindowLocationChanged(object sender, EventArgs e)
+    {
+        Save();
+    }
 
-            if (_autoStartMenuItem != null)
-                _autoStartMenuItem.IsChecked = StartManager.AutoStartEnabled;
+    private void HandleWindowSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        WindowResized(this, EventArgs.Empty);
 
-            var windowCount = WindowManager.GetWindowList().Count;
+        Save();
+    }
 
-            _allWindowsMenuItem.Visibility = windowCount <= 1 ? Visibility.Collapsed : Visibility.Visible;
-            _allWindowsSeparator.Visibility = _allWindowsMenuItem.Visibility;
-        }
+    private void HandleChangeAppearanceMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        var appearanceWindow = new AppearanceWindow(_mainWindow.WindowSettings);
+        appearanceWindow.ShowDialog();
 
-        public void SetText(string text)
-        {
-            _mainWindow.HtmlLabel.Text = text;
-        }
+        Save();
+    }
 
-        private void HandleLockedMenuItemClicked(object sender, RoutedEventArgs e)
-        {
-            _mainWindow.WindowSettings.Locked = !_mainWindow.WindowSettings.Locked;
-            _mainWindow.WindowSettings.Apply();
-        }
+    private void HandleMainWindowClosed(object sender, EventArgs e)
+    {
+        Save();
 
-        private void HandleExitMenuItemClick(object sender, RoutedEventArgs e)
-        {
-            Save();
+        WindowClosed(null, EventArgs.Empty);
 
-            _mainWindow.Close();
-        }
+        _trayIcon.Dispose();
+    }
 
-        public void Save()
-        {
-            _windowSource.WindowSettings = _mainWindow.WindowSettings.Save();
-        }
+    public ContextMenu ContextMenu => _trayIcon.ContextMenu;
 
-        public void Dispose()
-        {
-            _taskbarIcon.Dispose();
+    private void HandleContextMenuOpened(object sender, RoutedEventArgs e)
+    {
+        _lockMenuItem.IsChecked = _mainWindow.WindowSettings.Locked;
 
-            _mainWindow.Close();
-        }
+        if (_autoStartMenuItem != null)
+            _autoStartMenuItem.IsChecked = StartManager.AutoStartEnabled;
 
-        public Point Location
-        {
-            get { return new Point(_mainWindow.Left, _mainWindow.Top); }
-        }
+        var windowCount = WindowManager.GetWindowList().Count;
 
-        public Size Size
-        {
-            get { return new Size(_mainWindow.Width, _mainWindow.Height); }
-        }
+        _allWindowsMenuItem.Visibility = windowCount <= 1 ? Visibility.Collapsed : Visibility.Visible;
+        _allWindowsSeparator.Visibility = _allWindowsMenuItem.Visibility;
+    }
 
-        public Size ContentSize
-        {
-            get { return new Size(_mainWindow.HtmlLabel.ActualWidth, _mainWindow.HtmlLabel.ActualHeight); }
-        }
+    public void SetText(string text)
+    {
+        _mainWindow.HtmlLabel.Text = text;
+    }
 
-        public WindowSettings Settings
-        {
-            get { return _mainWindow.WindowSettings; }
-        }
+    private void HandleLockedMenuItemClicked(object sender, RoutedEventArgs e)
+    {
+        _mainWindow.WindowSettings.Locked = !_mainWindow.WindowSettings.Locked;
+        _mainWindow.WindowSettings.Apply();
+    }
 
-        public string IconToolTipText
-        {
-            get { return _taskbarIcon.ToolTipText; }
-            set { _taskbarIcon.ToolTipText = value; }
-        }
+    private void HandleExitMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        Save();
+
+        _mainWindow.Close();
+    }
+
+    public void Save()
+    {
+        _windowSource.WindowSettings = _mainWindow.WindowSettings.Save();
+    }
+
+    public void Dispose()
+    {
+        _trayIcon.Dispose();
+
+        _mainWindow.Close();
+
+        GC.SuppressFinalize(this);
+    }
+
+    public Point Location => new(_mainWindow.Left, _mainWindow.Top);
+
+    public Size Size => new(_mainWindow.Width, _mainWindow.Height);
+
+    public Size ContentSize => new(_mainWindow.HtmlLabel.ActualWidth, _mainWindow.HtmlLabel.ActualHeight);
+
+    public WindowSettings Settings => _mainWindow.WindowSettings;
+
+    public string IconToolTipText
+    {
+        get => _trayIcon.ToolTipText;
+        set => _trayIcon.ToolTipText = value;
     }
 }

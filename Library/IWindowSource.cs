@@ -1,19 +1,20 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
-namespace FloatingStatusWindowLibrary
+namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+
+public interface IWindowSource
 {
-    public interface IWindowSource
-    {
-        string Name { get; }
-        string WindowSettings { get; set; }
-        Icon Icon { get; }
+    Guid Id { get; }
+    string Name { get; }
+    string WindowSettings { get; set; }
+    Icon Icon { get; }
 
-        bool HasSettingsMenu { get; }
-        bool HasRefreshMenu { get; }
-        bool HasAboutMenu { get; }
+    bool HasSettingsMenu { get; }
+    bool HasRefreshMenu { get; }
+    bool HasAboutMenu { get; }
 
-        void ShowSettings();
-        void Refresh();
-        void ShowAbout();
-    }
+    void ShowSettings();
+    void Refresh();
+    void ShowAbout();
 }
