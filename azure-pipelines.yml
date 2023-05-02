@@ -38,15 +38,15 @@ steps:
   displayName: 'dotnet build'
   inputs:
     command: 'build'
-    arguments: 'Library --configuration $(buildConfiguration)'
-    projects: 'FloatingStatusWindow.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'Library\FloatingStatusWindow.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
   inputs:
     command: 'pack'
-    arguments: 'Library --configuration $(buildConfiguration)'
-    packagesToPack: 'FloatingStatusWindow.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: 'Library\FloatingStatusWindow.csproj'
     nobuild: true
     versioningScheme: 'byBuildNumber'
 
