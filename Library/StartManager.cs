@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 public static class StartManager
 {

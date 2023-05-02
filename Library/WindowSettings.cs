@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 [PublicAPI]
 public class WindowSettings : ICloneable

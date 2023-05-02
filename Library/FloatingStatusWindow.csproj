@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <RootNamespace>ChrisKaczor.Wpf.FloatingStatusWindow</RootNamespace>
-    <AssemblyName>ChrisKaczor.Wpf.FloatingStatusWindow</AssemblyName>
+    <RootNamespace>ChrisKaczor.Wpf.Windows.FloatingStatusWindow</RootNamespace>
+    <AssemblyName>ChrisKaczor.Wpf.Windows.FloatingStatusWindow</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>

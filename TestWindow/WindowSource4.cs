@@ -1,4 +1,4 @@
-﻿using ChrisKaczor.Wpf.FloatingStatusWindow;
+﻿using ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 using System;
 using System.Globalization;
 using System.Reflection;

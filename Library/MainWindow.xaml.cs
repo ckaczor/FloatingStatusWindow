@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 internal partial class MainWindow
 {

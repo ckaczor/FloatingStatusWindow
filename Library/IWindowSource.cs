@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 public interface IWindowSource
 {

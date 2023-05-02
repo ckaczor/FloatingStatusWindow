@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Media;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 internal partial class AppearanceWindow
 {

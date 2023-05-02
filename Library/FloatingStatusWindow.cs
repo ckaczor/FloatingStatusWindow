@@ -1,11 +1,11 @@
-﻿using ChrisKaczor.Wpf.FloatingStatusWindow.Properties;
+﻿using ChrisKaczor.Wpf.Windows.FloatingStatusWindow.Properties;
 using H.NotifyIcon;
 using JetBrains.Annotations;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ChrisKaczor.Wpf.FloatingStatusWindow;
+namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
 [PublicAPI]
 public class FloatingStatusWindow : IDisposable
