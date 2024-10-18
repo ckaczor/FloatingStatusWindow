@@ -27,7 +27,7 @@ internal class WindowSource1 : IWindowSource, IDisposable
 
     private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        _dispatcher.InvokeAsync(() => _floatingStatusWindow.SetText(DateTime.Now.ToString(CultureInfo.InvariantCulture)));
+        _dispatcher.InvokeAsync(() => _floatingStatusWindow.SetText($"<font color='green'>{DateTime.Now.ToString(CultureInfo.InvariantCulture)}</font><br/><font color='red'>{DateTime.Now.ToString(CultureInfo.InvariantCulture)}</font>"));
     }
 
     public void Dispose()

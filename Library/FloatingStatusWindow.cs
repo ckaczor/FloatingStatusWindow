@@ -212,7 +212,7 @@ public class FloatingStatusWindow : IDisposable
 
     public void SetText(string text)
     {
-        _mainWindow.HtmlLabel.Text = text;
+        _mainWindow.HtmlLabel.Html = text;
     }
 
     private void HandleLockedMenuItemClicked(object sender, RoutedEventArgs e)

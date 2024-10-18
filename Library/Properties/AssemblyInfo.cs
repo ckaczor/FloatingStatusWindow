@@ -5,7 +5,7 @@ using System.Windows;
 
 [assembly: ComVisible(false)]
 
-[assembly: SupportedOSPlatform("windows")]
+[assembly: SupportedOSPlatform("windows5.1.2600")]
 
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
