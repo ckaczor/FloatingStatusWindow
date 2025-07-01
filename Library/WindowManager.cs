@@ -1,5 +1,4 @@
-﻿using ChrisKaczor.Wpf.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -9,6 +8,11 @@ namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 public static partial class WindowManager
 {
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+    private enum ChangeWindowMessageFilterExAction : uint
+    {
+        Allow = 1
+    }
 
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -26,6 +30,10 @@ public static partial class WindowManager
     [LibraryImport("user32.dll", EntryPoint = "SendMessageW")]
     private static partial void SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
+    [LibraryImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial void ChangeWindowMessageFilterEx(IntPtr hWnd, uint msg, ChangeWindowMessageFilterExAction action, IntPtr changeInfo);
+
     private const string WindowMessageSetLock = "FloatingStatusWindowLibrary_SetLock";
     private const string WindowMessageClose = "FloatingStatusWindowLibrary_Close";
 
@@ -42,6 +50,12 @@ public static partial class WindowManager
 
     private static List<WindowInformation> _windowList;
     private static IntPtr _excludeHandle;
+
+    public static void AllowMessagesThroughFilter(IntPtr hWnd)
+    {
+        ChangeWindowMessageFilterEx(hWnd, SetLockMessage, ChangeWindowMessageFilterExAction.Allow, IntPtr.Zero);
+        ChangeWindowMessageFilterEx(hWnd, CloseMessage, ChangeWindowMessageFilterExAction.Allow, IntPtr.Zero);
+    }
 
     public static List<WindowInformation> GetWindowList()
     {

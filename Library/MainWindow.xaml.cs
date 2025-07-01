@@ -77,6 +77,14 @@ internal partial class MainWindow
         WindowSettings.Apply();
     }
 
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+
+        var windowHandle = new WindowInteropHelper(this).Handle;
+        WindowManager.AllowMessagesThroughFilter(windowHandle);
+    }
+
     protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         if (msg == WindowManager.SetLockMessage)
