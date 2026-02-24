@@ -41,36 +41,24 @@ internal class WindowSource3 : IWindowSource, IDisposable
 
     public Guid Id => Guid.Parse("CF7466DF-8980-452B-B2FA-290B26204BF2");
 
-    public string Name
-    {
-        get { return "Test Window 3"; }
-    }
+    public string Name => "Test Window 3";
 
-    public System.Drawing.Icon Icon
-    {
-        get { return Properties.Resources.ApplicationIcon; }
-    }
+    public System.Drawing.Icon Icon => Properties.Resources.ApplicationIcon;
 
-    public bool HasSettingsMenu
-    {
-        get { return true; }
-    }
+    public bool HasSettingsMenu => true;
 
     public bool HasAboutMenu => true;
 
     public void ShowAbout()
     {
-        _floatingStatusWindow.SetText(Assembly.GetEntryAssembly().GetName().Version.ToString());
+        _floatingStatusWindow.SetText(Assembly.GetEntryAssembly()?.GetName().Version?.ToString());
     }
 
     public void ShowSettings()
     {
     }
 
-    public bool HasRefreshMenu
-    {
-        get { return true; }
-    }
+    public bool HasRefreshMenu => true;
 
     public void Refresh()
     {
@@ -78,7 +66,7 @@ internal class WindowSource3 : IWindowSource, IDisposable
 
     public string WindowSettings
     {
-        get { return Properties.Settings.Default.WindowSettings3; }
+        get => Properties.Settings.Default.WindowSettings3;
         set
         {
             Properties.Settings.Default.WindowSettings3 = value;

@@ -1,5 +1,4 @@
-﻿using ChrisKaczor.Wpf.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Interop;
@@ -20,25 +19,23 @@ internal partial class MainWindow
 
     public WindowSettings WindowSettings { get; set; }
 
-    private bool _locked;
-
     public bool Locked
     {
-        get => _locked;
+        get;
         set
         {
-            _locked = value;
+            field = value;
 
-            _windowChrome.CaptionHeight = (_locked ? 0 : WindowCaptionHeight);
+            _windowChrome.CaptionHeight = (field ? 0 : WindowCaptionHeight);
 
-            HtmlLabel.Margin = new Thickness(0, (_locked ? 0 : WindowCaptionHeight), 0, 0);
+            HtmlLabel.Margin = new Thickness(0, (field ? 0 : WindowCaptionHeight), 0, 0);
 
             // Show the header border if the window is unlocked
-            HeaderBorder.Visibility = (_locked ? Visibility.Collapsed : Visibility.Visible);
+            HeaderBorder.Visibility = (field ? Visibility.Collapsed : Visibility.Visible);
 
             // Show and enable the window border if the window is unlocked
-            BorderFull.BorderBrush = (_locked ? Brushes.Transparent : SystemColors.ActiveCaptionBrush);
-            BorderFull.IsEnabled = !_locked;
+            BorderFull.BorderBrush = (field ? Brushes.Transparent : SystemColors.ActiveCaptionBrush);
+            BorderFull.IsEnabled = !field;
 
             LockStateChanged(null, EventArgs.Empty);
         }
@@ -85,26 +82,37 @@ internal partial class MainWindow
         WindowManager.AllowMessagesThroughFilter(windowHandle);
     }
 
+    private void SetLocked(bool locked)
+    {
+        WindowSettings.Locked = locked;
+        Locked = locked;
+    }
+
     protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         if (msg == WindowManager.SetLockMessage)
         {
-            var lockState = (wParam == 1);
+            _dispatcher.InvokeAsync(() => SetLocked(wParam == 1));
 
-            _dispatcher.InvokeAsync(() =>
-            {
-                WindowSettings.Locked = lockState;
-                Locked = lockState;
-            });
+            handled = true;
+            return IntPtr.Zero;
+        }
+        
+        if (msg == WindowManager.IdentifyMessage)
+        {
+            handled = true;
+            return msg;
+        }
+        
+        if (msg == WindowManager.CloseMessage)
+        {
+            _dispatcher.InvokeAsync(Close);
 
+            handled = true;
             return IntPtr.Zero;
         }
 
-        if (msg != WindowManager.CloseMessage)
-            return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
-
-        _dispatcher.InvokeAsync(Close);
-        return IntPtr.Zero;
+        return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
     }
 
     protected override void OnLocationChanged(EventArgs e)

@@ -64,6 +64,8 @@ public class WindowSettings : ICloneable
 
     internal void Apply()
     {
+        Window.Title = Name;
+
         // Configure the text label
         HtmlLabel.FontFamily = new FontFamily(FontName);
         HtmlLabel.FontSize = FontSize;
@@ -98,9 +100,9 @@ public class WindowSettings : ICloneable
             return new WindowSettings();
 
         var serializer = new XmlSerializer(typeof(WindowSettings));
-        TextReader textReader = new StringReader(settings);
-        var windowSettings = (WindowSettings)serializer.Deserialize(textReader);
-        textReader.Close();
+        var stringReader = new StringReader(settings);
+        var windowSettings = (WindowSettings)serializer.Deserialize(stringReader);
+        stringReader.Close();
 
         return windowSettings;
     }
@@ -110,9 +112,9 @@ public class WindowSettings : ICloneable
         var builder = new StringBuilder();
 
         var serializer = new XmlSerializer(typeof(WindowSettings));
-        TextWriter textWriter = new StringWriter(builder);
-        serializer.Serialize(textWriter, this);
-        textWriter.Close();
+        var stringWriter = new StringWriter(builder);
+        serializer.Serialize(stringWriter, this);
+        stringWriter.Close();
 
         return builder.ToString();
     }

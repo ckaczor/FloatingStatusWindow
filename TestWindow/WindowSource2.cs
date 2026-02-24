@@ -41,36 +41,24 @@ internal class WindowSource2 : IWindowSource, IDisposable
 
     public Guid Id => Guid.Parse("F42F92BC-D397-497A-8E01-E71D084BEDB6");
 
-    public string Name
-    {
-        get { return "Test Window 2"; }
-    }
+    public string Name => "Test Window 2";
 
-    public System.Drawing.Icon Icon
-    {
-        get { return Properties.Resources.ApplicationIcon; }
-    }
+    public System.Drawing.Icon Icon => Properties.Resources.ApplicationIcon;
 
-    public bool HasSettingsMenu
-    {
-        get { return true; }
-    }
+    public bool HasSettingsMenu => true;
 
     public bool HasAboutMenu => true;
 
     public void ShowAbout()
     {
-        _floatingStatusWindow.SetText(Assembly.GetEntryAssembly().GetName().Version.ToString());
+        _floatingStatusWindow.SetText(Assembly.GetEntryAssembly()?.GetName().Version?.ToString());
     }
 
     public void ShowSettings()
     {
     }
 
-    public bool HasRefreshMenu
-    {
-        get { return true; }
-    }
+    public bool HasRefreshMenu => true;
 
     public void Refresh()
     {
@@ -78,7 +66,7 @@ internal class WindowSource2 : IWindowSource, IDisposable
 
     public string WindowSettings
     {
-        get { return Properties.Settings.Default.WindowSettings2; }
+        get => Properties.Settings.Default.WindowSettings2;
         set
         {
             Properties.Settings.Default.WindowSettings2 = value;

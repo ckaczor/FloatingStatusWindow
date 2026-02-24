@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
@@ -19,7 +20,7 @@ public static partial class WindowManager
     private static partial void EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
     [LibraryImport("user32.dll", SetLastError = true, StringMarshalling = StringMarshalling.Utf16, EntryPoint = "RegisterWindowMessageW")]
-    private static partial uint RegisterWindowMessage(string lpString);
+    private static partial int RegisterWindowMessage(string lpString);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
@@ -27,26 +28,29 @@ public static partial class WindowManager
     [LibraryImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowTextLengthW")]
     private static partial int GetWindowTextLength(IntPtr hWnd);
 
-    [LibraryImport("user32.dll", EntryPoint = "SendMessageW")]
-    private static partial void SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+    [LibraryImport("user32.dll", EntryPoint = "SendMessageW", SetLastError = true)]
+    private static partial IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
     [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static partial void ChangeWindowMessageFilterEx(IntPtr hWnd, uint msg, ChangeWindowMessageFilterExAction action, IntPtr changeInfo);
+    private static partial void ChangeWindowMessageFilterEx(IntPtr hWnd, int msg, ChangeWindowMessageFilterExAction action, IntPtr changeInfo);
 
+    private const string WindowMessageIdentify = "FloatingStatusWindowLibrary_Identify";
     private const string WindowMessageSetLock = "FloatingStatusWindowLibrary_SetLock";
     private const string WindowMessageClose = "FloatingStatusWindowLibrary_Close";
 
-    public static uint SetLockMessage { get; set; }
-    public static uint CloseMessage { get; set; }
+    public static int IdentifyMessage { get; set; }
+    public static int SetLockMessage { get; set; }
+    public static int CloseMessage { get; set; }
 
     static WindowManager()
     {
+        IdentifyMessage = RegisterWindowMessage(WindowMessageIdentify);
         SetLockMessage = RegisterWindowMessage(WindowMessageSetLock);
         CloseMessage = RegisterWindowMessage(WindowMessageClose);
     }
 
-    private static readonly object WindowLocker = new();
+    private static readonly Lock WindowLocker = new();
 
     private static List<WindowInformation> _windowList;
     private static IntPtr _excludeHandle;
@@ -61,7 +65,7 @@ public static partial class WindowManager
     {
         lock (WindowLocker)
         {
-            _windowList = new List<WindowInformation>();
+            _windowList = [];
             _excludeHandle = IntPtr.Zero;
 
             EnumWindows(EnumWindowProc, IntPtr.Zero);
@@ -74,7 +78,7 @@ public static partial class WindowManager
     {
         lock (WindowLocker)
         {
-            _windowList = new List<WindowInformation>();
+            _windowList = [];
             _excludeHandle = excludeHandle;
 
             EnumWindows(EnumWindowProc, IntPtr.Zero);
@@ -94,9 +98,20 @@ public static partial class WindowManager
 
     private static bool EnumWindowProc(IntPtr hWnd, IntPtr lParam)
     {
+        if (hWnd == _excludeHandle)
+            return true;
+
+        var identifyResult = SendMessage(hWnd, IdentifyMessage, IntPtr.Zero, IntPtr.Zero);
+
+        if (identifyResult == IdentifyMessage)
+        {
+            _windowList.Add(new WindowInformation(hWnd));
+            return true;
+        }
+
         var windowText = GetText(hWnd);
 
-        if (windowText == "FloatingStatusWindow" && hWnd != _excludeHandle)
+        if (windowText == "FloatingStatusWindow")
             _windowList.Add(new WindowInformation(hWnd));
 
         return true;
@@ -107,12 +122,12 @@ public static partial class WindowManager
         var lockState = locked ? 1 : 0;
 
         foreach (var w in GetWindowList())
-            SendMessage(w.Handle, SetLockMessage, lockState, IntPtr.Zero);
+            _ = SendMessage(w.Handle, SetLockMessage, lockState, IntPtr.Zero);
     }
 
     public static void CloseAll()
     {
         foreach (var w in GetWindowList())
-            SendMessage(w.Handle, CloseMessage, IntPtr.Zero, IntPtr.Zero);
+            _ = SendMessage(w.Handle, CloseMessage, IntPtr.Zero, IntPtr.Zero);
     }
 }

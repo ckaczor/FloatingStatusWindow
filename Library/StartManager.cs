@@ -1,6 +1,5 @@
 ﻿using ChrisKaczor.Wpf.Application;
 using System;
-using System.Windows;
 
 namespace ChrisKaczor.Wpf.Windows.FloatingStatusWindow;
 
