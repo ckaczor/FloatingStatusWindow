@@ -15,6 +15,16 @@ public static partial class WindowManager
         Allow = 1
     }
 
+    [Flags]
+    private enum SendMessageTimeoutFlags : uint
+    {
+        Normal = 0x0,
+        Block = 0x1,
+        AbortIfHung = 0x2,
+        NoTimeoutIfNotHung = 0x8,
+        ErrorOnExit = 0x20
+    }
+
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static partial void EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
@@ -30,6 +40,17 @@ public static partial class WindowManager
 
     [LibraryImport("user32.dll", EntryPoint = "SendMessageW", SetLastError = true)]
     private static partial IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+    [LibraryImport("user32.dll", EntryPoint = "SendMessageTimeoutW", SetLastError = true)]
+    private static partial IntPtr SendMessageTimeout(
+        IntPtr windowHandle,
+        int msg,
+        IntPtr wParam,
+        IntPtr lParam,
+        SendMessageTimeoutFlags flags,
+        uint timeout,
+        out IntPtr result);
+
 
     [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -101,7 +122,7 @@ public static partial class WindowManager
         if (hWnd == _excludeHandle)
             return true;
 
-        var identifyResult = SendMessage(hWnd, IdentifyMessage, IntPtr.Zero, IntPtr.Zero);
+        SendMessageTimeout(hWnd, IdentifyMessage, IntPtr.Zero, IntPtr.Zero, SendMessageTimeoutFlags.Normal, 100, out var identifyResult);
 
         if (identifyResult == IdentifyMessage)
         {
